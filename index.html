@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Home Page</title>
+
+	<script type="text/javascript" src="js/jquery.js"></script>
+    <script src="js/jquery.flexslider-min.js"></script>
+    <script>
+    	$(window).ready(function(){
+			$('.flexslider').flexslider({
+				animation: "slide",
+				pauseOnHover: true
+			});
+		});
+    </script>
+	<link rel="stylesheet" href="flexslider.css" type="text/css">
+	<link type="text/css" rel="stylesheet" media="screen" href="style.css" />
+    
+</head>
+
+<body>
+	<div class="wrap">
+    	<div class="header">
+        	<h1>Cameron's Physical Training Page</h1>
+        </div>
+        
+        <!----------------------Navigation----------------------------->
+        
+        <div class="nav-bar">
+        	<ul>
+            	<li><a href="index.html">Home<a></li>
+                <li><a href="testimonials.html">Testimonials<a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </div>
+        
+        <!-----------------------Main Content Goes Here------------------>
+        
+        <div class="main-content">
+        	<div class="center-content">
+                <div class="flex-slide-container">
+                    <div class="flexslider">
+                        <ul class="slides">
+                            <li><img src="img/test.jpg"></li>
+                            <li><img src="img/test2.jpg"></li>
+                            <li><img src="img/test3.jpg"></li>
+                            <li><img src="img/test4.jpg"></li>
+                            <li><img src="img/test5.jpg"></li>
+                            <li><img src="img/test6.jpg"></li>
+                            <li><img src="img/test7.jpg"></li>
+                        </ul>
+                    </div><!--end flexslider div-->       
+             	</div>
+            	<p>Fill out this form to be contacted by me.</p>
+                <fieldset>    
+                    <form action="" method="post">
+                        <p>
+                        <label for="name">Name:</label>
+                            <select name="title">
+                                <option value="" selected="selected"></option>
+                                <option value="Mr.">Mr.</option>
+                                <option value="Mrs.">Mrs.</option>
+                                <option value="Ms.">Ms.</option>
+                            </select>
+                            <input type="text" name="name" size="20" value="Name goes here" />
+                        </p>
+                        <p>Email:
+                            <input type="text" name="email" size="20" value="Email goes here" />
+                        </p>
+                        <input type="submit" name="submit" value="Submit" />
+                    </form>
+            	</fieldset>
+            </div>
+        </div>
+        
+        <!----------------------Footer---------------------------------------->
+        
+        <div class="footer">
+        	<p>
+            	<a href="index.html">Home</a> | 
+                <a href="testimonials.html">Testimonials</a> | 
+                <a href="about.html">About</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
