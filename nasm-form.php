@@ -1,47 +1,96 @@
 
 <?php
-include('include/header.inc.php');
+include('include/header.php');
+
+$ok = FALSE;
+
+function input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'):
+	if (empty($_POST['first_name'])):
+		$ok = FALSE;
+    	$first_name_msg = "First name is required";
+  	else:
+    	$name = $_POST['first_name'];
+    endif;
+  
+  	if (empty($_POST['last_name'])):
+		$ok = FALSE;
+    	$lasst_name_msg = "Last name is required";
+    else:
+    	$name = $_POST['last_name'];
+    endif;
+  
+  	if(empty($_POST['date'])):
+		$ok = FALSE;
+    	$date_msg = "Date is required";
+	else:
+		$date = $_POST['date'];
+ 	endif;
 	
+	if (empty($_POST['height'])):
+		$ok = FALSE;
+    	$height_msg = "Height is required";
+    else:
+    	$height = $_POST['height'];
+    endif;
+	
+	if (empty($_POST['weight'])):
+		$ok = FALSE;
+    	$weight_msg = "Weight is required";
+    else:
+    	$weight = $_POST['weight'];
+    endif;
+	
+	if (empty($_POST['age'])):
+		$ok = FALSE;
+    	$age_msg = "Age is required";
+    else:
+    	$age = $_POST['age'];
+    endif;
 endif;
 
 ?>
 	<link type="text/css" rel="stylesheet" media="screen" href="forms.css" />
     <div class="main">
-        <form>
-            <label for="fName">First Name: </label>
-            <input class="<?php if(!empty($fName_msg)): echo pink; else: echo white; endif; ?>"
-            	type="text" name="fName" />
+        <form action="nasm-form.php" method="post" id="f">
+            <label for="first_name">First Name: </label>
+            <input class="<?php if(!empty($first_name_msg)): echo pink; else: echo white; endif; ?>" type="text" name="first_name" value="<?php echo $_POST['first_name']; ?>" />
             	<br />
-                <?php if(!empty($fName_msg)): echo $fName_msg; endif; ?>
+                <?php if(!empty($first_name_msg)): echo $first_name_msg; endif; ?>
             
-            <label for="lName">Last Name: </label>
-            <input class="<?php if(!empty($lName_msg)): echo pink; else: echo white; endif; ?>"
-            	type="text" name="lName" />
+            <label for="last_name">Last Name: </label>
+            <input class="<?php if(!empty($lasst_name_msg)): echo pink; else: echo white; endif; ?>" type="text" name="last_name" value="<?php echo $_POST['last_name']; ?>" />
             	<br />
-                <?php if(!empty($lName_msg)): echo $lName_msg; endif; ?>
+                <?php if(!empty($lasst_name_msg)): echo $lasst_name_msg; endif; ?>
                 
             <label for="date">Date: </label>
-            <input type="date" name="date" />
+            <input class="<?php if(!isset($date_msg)): echo pink; else: echo white; endif; ?>" type="date" name="date" value="<?php echo $_POST['date']; ?>" />
             	<br />
-                
+                <?php if(!empty($date_msg)): echo $date_msg; endif; ?>
                 
             <label for="height">Height: </label>
-            <input type="text" name="height" />
+            <input class="<?php if(!empty($height_msg)): echo pink; else: echo white; endif; ?>" type="text" name="height" value="<?php echo $_POST['height']; ?>" />
             	<br />
                 <?php if(!empty($height_msg)): echo $height_msg; endif; ?>
                 
             <label for="weight">Weight: </label>
-            <input type="text" name="weight" />
+            <input class="<?php if(!empty($weight_msg)): echo pink; else: echo white; endif; ?>" type="text" name="weight" value="<?php echo $_POST['weight']; ?>" />
             	<br />
                 <?php if(!empty($weight_msg)): echo $weight_msg; endif; ?>
                 
             <label for="age">Age: </label>
-            <input type="text" name="age" />
+            <input class="<?php if(!empty($age_msg)): echo pink; else: echo white; endif; ?>" type="text" name="age" value="<?php echo $_POST['age']; ?>" />
             	<br />
                 <?php if(!empty($age_msg)): echo $age_msg; endif; ?>
-                
+            
+            
+            
             <label for="phys-name">Physicians Name: </label>
             <input type="text" name="phys-name" />
             	<br />
@@ -53,6 +102,8 @@ endif;
                 <?php if(!empty($phone_msg)): echo $phone_msg; endif; ?>
                 
         		<br />
+                
+                
         <h4>PHYSICAL ACTIVITY READINESS QUESTIONNAIRE (PAR-Q)</h4>
         	<br />
         
@@ -208,10 +259,12 @@ endif;
                 	<br />
         <p>(If yes, please explain.)</p>
         	<input type="text" name="yes-explain" size="75" />
-        		<br /> 
+        		<br />
+                	<br />
+        <input type="submit" name="submit" value="Submit Form" />
         </form>
     </div>
 
 <?php
-include('include/fotter.inc.php');
+include('include/footer.php');
 ?>
