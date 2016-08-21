@@ -1,7 +1,9 @@
         
-        <?php include '/header.php'; ?>
+        <?php
+        $title = "Cameron's Personal Training Home Page";
+        include('include/header.php'); ?>
         
-        <!-----------------------Main Content Goes Here------------------>
+        <!--Main Content Goes Here-->
         
         <div class="main-content">
         	<div class="center-content">
@@ -20,9 +22,8 @@
              	</div>
   				<br class="clear-float">
                 <fieldset>    
-                    <p>Fill out this form to be contacted by me.</p>
-                    <form action="index.php" method="post">
-                        <p>
+                    <p id="home">Fill out this form to be contacted by me.</p>
+                    <form action="index.php" method="post" id="home">
                         <label for="name">Name:</label>
                             <select name="title">
                                 <option value="" selected="selected"></option>
@@ -30,22 +31,18 @@
                                 <option value="Mrs.">Mrs.</option>
                                 <option value="Ms.">Ms.</option>
                             </select>
-                            <input type="text" name="name" size="20" value="Name goes here" />
-                        </p>
-                        <p> 
+                            <input type="text" name="name" size="" value="<?php if(!empty($_POST['name'])): echo $_POST['name']; endif; ?>" />
+                                <br /> 
                         <label for="email">Email:</label>
-                            <input type="text" name="email" size="20" value="Email goes here" />
-                        </p>
-                        <p>
-                            <input type="submit" name="done" value="Contact Me!" />
-                        </p>
+                            <input type="text" name="email" size="" value="<?php if(!empty($_POST['email'])): echo $_POST['email']; endif; ?>" />
+                            <br />
                         <input type="submit" name="submit" value="Submit" />
                     </form>
                 </fieldset>
             </div>
         </div>
         
-        <!----------------------Footer---------------------------------------->
+        <!--Footer-->
         
-        <?php include '/fotter.php'; ?>
+        <?php include('include/footer.php'); ?>
                   

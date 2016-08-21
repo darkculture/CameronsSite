@@ -1,8 +1,8 @@
         <div class="footer">
         	<p>
-            	<a href="index.html">Home</a> | 
-                <a href="testimonials.html">Testimonials</a> | 
-                <a href="about.html">About</a>
+            	<a href="index.php">Home</a> | 
+                <a href="testimonials.php">Testimonials</a> | 
+                <a href="about.php">About</a>
             </p>
         </div>
     </div>
