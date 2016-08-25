@@ -2,21 +2,21 @@
 
 * {margin:0; padding:0;}
 body {background:black; font:100% verdana,arial,sans-serif;}
-h1, h3 {text-align:center; font-size:2em; color:#FF0;}
-.wrap {margin:auto; padding:20px; min-height:900px; max-width:1200px; background:#333;}
+h1 {text-align:center; font-size:2em; color:black;}
+.wrap {margin:auto; padding:20px; min-height:900px; max-width:1200px; width:70%; background:#FFED00;}
 
 /*************************************/
 /***********Navigation****************/
 /*************************************/
 
-.nav-bar {margin:auto; padding:0; width:70%; background:yellow; border-top:1px solid #FF0; border-bottom:1px solid #FF0;}
+.nav-bar {margin:auto; padding:0; width:80%; background:#7E7E7E;}
 ul {margin:0; padding:0; list-style:none; text-align:center;}
-ul li {display:inline-block; padding:5px 10px; background:red;}
+ul li {display:inline-block; padding:5px 10px; background:#7E7E7E;}
 a {text-decoration:none;}
-a:hover {color:#000;}
 a:visited,
 a:active,
 a:link {color:#FF0;}
+a:hover {background:#FFED00; color:black;}
 
 /***************************************/
 /***********Content*********************/
@@ -37,14 +37,11 @@ fieldset {margin:auto; padding:5px; width:300px; background:#FF0;}
 /************Form************************/
 /****************************************/
 
-body #home {color:#000;}
-form p #home {color:#000;}
-
 body {color:white;}
-.main {width:70%; margin:auto; padding:50px 0 50px; background:#333;}
+.main {width:80%; margin:auto; padding:50px 0 50px; background:#333;}
 .error {color: #FF0000;}
 h1 {padding-bottom:5px;}
-form {margin: auto; padding: 0; min-width: 500px; max-width: 600px; width: 560px;}
+form {margin: auto; padding: 0; min-width: 500px; max-width: 600px; width: 70%;}
 form fieldset {border-color:#fff; border-width:1px; border-style:solid; padding:20px; margin:0;}
 form fieldset legend {font-size:1.1em;}
 form label {display: block; float: left; width: 150px; padding: 0; margin: 5px 0 0; text-align: right;}

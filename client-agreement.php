@@ -1,6 +1,7 @@
 
 <?php
-include('include/header.inc.php');
+include('include/header.php');
+$page_title = "Client Agreement Form";
 
 $checked = 'checked';
 $ok = true;
@@ -21,33 +22,42 @@ foreach($_POST as $key => $value):
 endforeach;
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'):
+
 	if (empty($_POST['first_name'])):
 		$ok = FALSE;
-    	$first_name_msg = '<span class="error">First name is required';
+    	$first_name_msg = '<span class="error">First name is required</span>';
   	else:
 		if(!preg_match($name_regx, $_POST['first_name'])):
 			$first_name_msg = 'Use letters only';
 		endif;
     endif;
-	
+
 	if (empty($_POST['last_name'])):
 		$ok = FALSE;
-    	$last_name_msg = '<span class="error">Last name is required';
+    	$last_name_msg = '<span class="error">Last name is required</span>';
   	else:
 		if(!preg_match($name_regx, $_POST['last_name'])):
 			$last_name_msg = 'Use letters only';
 		endif;
     endif;
 	
-	// nned to talk to bruce about date input validation
-	//if(
+	if(empty($_POST['date'])):
+		$date_msg = '<span class="error">Please enter a date</span>';
+		$ok = false;
+	else:
+		$dateplode = explode("-", $_POST['date']);
+		if(!checkdate($dateplode[1] , $dateplode[2] , $dateplode[0])):
+			$date_msg = 'Please enter a valid date';
+		endif;
+	endif;
 	
-	if(!isset($_POST['sig'])):
+	if(!isset($_POST['signature'])):
 		$agreed = 'No';
 		$sig_msg = '<span class="error">Terms met: '.$agreed.'</span>';
 		$ok = false;
 	else:
 		$agreed = 'Yes';
+		$ok = true;
 	endif;
 endif;
 ?>
@@ -74,28 +84,25 @@ endif;
             <p>I have read this Release and Terms of Agreement and I understand all of its terms. I sign it voluntarily and with full knowledge of its significance.</p>
             	<br />
                 <label for="first_name">First Name: </label>
-                <input class="<?php if(!empty($first_name_msg)): 
-					echo pink; else: echo white; endif; ?>" type="text" name="first_name" value="<?php if(!empty($_POST['first_name'])):
-					echo $_POST['first_name']; endif; ?>" />
-                        <br />
-                        <?php if(!empty($first_name_msg)): echo $first_name_msg; endif; ?>
+                <input class="<?php if(!empty($first_name_msg)): echo pink; else: echo white; endif; ?>"
+                type="text" name="first_name" value="<?php if(!empty($_POST['first_name'])): echo $_POST['first_name']; endif; ?>" />
+                	<br />
+                    <?php if(!empty($first_name_msg)): echo $first_name_msg; endif; ?>
                     
                 <label for="last_name">Last Name: </label>
-                <input class="<?php if(!empty($last_name_msg)): 
-					echo pink; else: echo white; endif; ?>" type="text" name="last_name" value="<?php if(!empty($_POST['last_name'])):
-					echo $_POST['last_name']; endif; ?>" />
-                        <br />
-                        <?php if(!empty($last_name_msg)): echo $last_name_msg; endif; ?>
-                
+                <input class="<?php if(!empty($last_name_msg)): echo pink; else: echo white; endif; ?>"
+                type="text" name="last_name" value="<?php if(!empty($_POST['last_name'])): echo $_POST['last_name']; endif; ?>" />
+                	<br />
+                    <?php if(!empty($last_name_msg)): echo $last_name_msg; endif; ?>
+                    
                 <label for="date">Date: </label> <!-- Need to talk to bruce about validating this type of input -->
-                <input class="<?php if(!empty($date_msg)): 
-					echo pink; else: echo white; endif; ?>" type="text" name="date" value="<?php if(!empty($_POST['date'])):
-					echo $_POST['date']; endif; ?>"/>
-                		<br />
-                    	<?php if(!empty($date_msg)): echo $date_msg; endif; ?>
+                <input class="<?php if(!empty($date_msg)): echo pink; else: echo white; endif; ?>"
+                type="date" name="date" value="<?php if(!empty($_POST['date'])): echo $_POST['date']; endif; ?>" />
+                	<br />
+                    <?php if(!empty($date_msg)): echo $date_msg; endif; ?>
                     
                 <label for="signature">Digital Signature: </label>
-                <input type="checkbox" name="signature" value="" <?php if(!empty($sig_msg)): echo $checked; endif; ?> />
+                <input type="checkbox" name="signature" checked="<?php if(empty($sig_msg)): echo $checked; endif; ?>" />
     				<?php if(!empty($sig_msg)): echo $sig_msg; endif; ?>
                 <br />
                 
@@ -106,5 +113,10 @@ endif;
         </form>
     </div>
 <?php
-include('include/fotter.inc.php');
+
+//echo '<pre>';
+//print_r($GLOBALS);
+//echo '</pre>';
+
+include('include/footer.php');
 ?>

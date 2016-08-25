@@ -6,10 +6,10 @@ include('include/header.php');
 // define regx
 $ok = FALSE;
 $phone_regx = '/^(\d[\s-]?)?[\(\[\s-]{0,2}?\d{3}[\)\]\s-]{0,2}?\d{3}[\s-]?\d{4}$/i';
-$email_regx = 'if (!filter_var($email, FILTER_VALIDATE_EMAIL)):';
+// $email_regx = 'if (!filter_var($email, FILTER_VALIDATE_EMAIL)):';
 $name_regx = '/^[a-zA-Z ]*$/';
-$zip_regx = '/(^\d{5}(-\d{4})?$/';
-$site_regx = '/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i';
+// $zip_regx = '/(^\d{5}(-\d{4})?$/';
+// $site_regx = '/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i';
 
 // remove unwanteed characters
 function input($data) {
@@ -29,56 +29,68 @@ endforeach;
 if($_SERVER['REQUEST_METHOD'] == 'POST'):
 	if (empty($_POST['first_name'])):
 		$ok = FALSE;
-    	$first_name_msg = '<span class="error">First name is required';
+    	$first_name_msg = '<span class="error">First name is required</span>';
   	else:
 		if(!preg_match($name_regx, $_POST['first_name'])):
-			$name_msg = 'Use letters only';
+			$name_msg = '<span class="error">Use letters only</span>';
 		endif;
     endif;
   
   	if (empty($_POST['last_name'])):
 		$ok = FALSE;
-    	$lasst_name_msg = '<span class="error">Last name is required</span>';
+    	$last_name_msg = '<span class="error">Last name is required</span>';
     else:
 		if(!preg_match($name_regx, $_POST['last_name'])):
-			$name_msg = 'Use letters only';
+			$name_msg = '<span class="error">Use letters only</span>';
 		endif;
     endif;
   
   	if(empty($_POST['date'])):
-		$ok = FALSE;
-    	$date_msg = '<span class="error">Date is required';
+		$date_msg = '<span class="error">Please enter a date</span>';
+		$ok = false;
 	else:
-		$date = $_POST['date'];
- 	endif;
+		$dateplode = explode("-", $_POST['date']);
+		if(!checkdate($dateplode[1] , $dateplode[2] , $dateplode[0])):
+			$date_msg = '<span class="error">Please enter a valid date</span>';
+		endif;
+	endif;
 	
 	if (empty($_POST['height'])):
 		$ok = FALSE;
-    	$height_msg = '<span class="error">Height is required';
+    	$height_msg = '<span class="error">Height is required</span>';
     else:
     	$height = $_POST['height'];
     endif;
 	
 	if (empty($_POST['weight'])):
 		$ok = FALSE;
-    	$weight_msg = '<span class="error">Weight is required';
+    	$weight_msg = '<span class="error">Weight is required</span>';
     else:
     	$weight = $_POST['weight'];
     endif;
 	
 	if (empty($_POST['age'])):
 		$ok = FALSE;
-    	$age_msg = '<span class="error">Age is required';
+    	$age_msg = '<span class="error">Age is required</span>';
     else:
     	$age = $_POST['age'];
     endif;
 	
+	if (empty($_POST['last_name'])):
+		$ok = FALSE;
+    	$last_name_msg = '<span class="error">Last name is required</span>';
+    else:
+		if(!preg_match($name_regx, $_POST['last_name'])):
+			$name_msg = '<span class="error">Use letters only</span>';
+		endif;
+    endif;
+	
 	if (!is_numeric($_POST['phone'])):
 		$ok = FALSE;
-		$phone_msg = '<span class="error">Use numbers only';
+		$phone_msg = '<span class="error">Use numbers only</span>';
 	else:
 		if(!preg_match($phone_regx, $_POST['phone'])):
-			$phone_msg_2 = 'Use proper format';
+			$phone_msg_2 = '<span class="error">Use proper format</span>';
 		endif;
 	endif;
 endif;
@@ -88,44 +100,50 @@ endif;
     <div class="main">
         <form action="nasm-form.php" method="post" id="f">
             <label for="first_name">First Name: </label>
-            <input class="<?php if(!empty($first_name_msg)): echo pink; else: echo white; endif; ?>" type="text" name="first_name" value="<?php if(!empty($_POST['first_name'])): echo $_POST['first_name']; endif; ?>" />
+            <input class="<?php if(!empty($first_name_msg)): echo pink; else: echo white; endif; ?>" type="text" id="first_name" name="first_name" value="<?php if(!empty($_POST['first_name'])): 
+			echo $_POST['first_name']; endif; ?>" />
             	<br />
                 <?php if(!empty($first_name_msg)): echo $first_name_msg; endif; ?>
             
             <label for="last_name">Last Name: </label>
-            <input class="<?php if(!empty($lasst_name_msg)): echo pink; else: echo white; endif; ?>" type="text" name="last_name" value="<?php if(!empty($_POST['last_name'])): echo $_POST['last_name']; endif; ?>" />
+            <input class="<?php if(!empty($lasst_name_msg)): echo pink; else: echo white; endif; ?>" type="text" id="last_name" name="last_name" value="<?php if(!empty($_POST['last_name'])): 
+			echo $_POST['last_name']; endif; ?>" />
             	<br />
                 <?php if(!empty($lasst_name_msg)): echo $lasst_name_msg; endif; ?>
                 
             <label for="date">Date: </label>
-            <input class="<?php if(!isset($date_msg)): echo pink; else: echo white; endif; ?>" type="date" name="date" value="<?php if(!empty($_POST['date'])): echo $_POST['date']; endif; ?>" />
+            <input class="<?php if(!isset($date_msg)): echo pink; else: echo white; endif; ?>" type="date" id="date" name="date" value="<?php if(!empty($_POST['date'])): 
+			echo $_POST['date']; endif; ?>" />
             	<br />
                 <?php if(!empty($date_msg)): echo $date_msg; endif; ?>
                 
             <label for="height">Height: </label>
-            <input class="<?php if(!empty($height_msg)): echo pink; else: echo white; endif; ?>" type="text" name="height" value="<?php if(!empty($_POST['height'])): echo $_POST['height']; endif; ?>" />
+            <input class="<?php if(!empty($height_msg)): echo pink; else: echo white; endif; ?>" type="text" id="height" name="height" value="<?php if(!empty($_POST['height'])): 
+			echo $_POST['height']; endif; ?>" />
             	<br />
                 <?php if(!empty($height_msg)): echo $height_msg; endif; ?>
                 
             <label for="weight">Weight: </label>
-            <input class="<?php if(!empty($weight_msg)): echo pink; else: echo white; endif; ?>" type="text" name="weight" value="<?php if(!empty($_POST['weight'])): echo $_POST['weight']; endif; ?>" />
+            <input class="<?php if(!empty($weight_msg)): echo pink; else: echo white; endif; ?>" type="text" id="weight" name="weight" value="<?php if(!empty($_POST['weight'])): 
+			echo $_POST['weight']; endif; ?>" />
             	<br />
                 <?php if(!empty($weight_msg)): echo $weight_msg; endif; ?>
                 
             <label for="age">Age: </label>
-            <input class="<?php if(!empty($age_msg)): echo pink; else: echo white; endif; ?>" type="text" name="age" value="<?php if(!empty($_POST['age'])): echo $_POST['age']; endif; ?>" />
+            <input class="<?php if(!empty($age_msg)): echo pink; else: echo white; endif; ?>" type="text" id="age" name="age" value="<?php if(!empty($_POST['age'])): 
+			echo $_POST['age']; endif; ?>" />
             	<br />
                 <?php if(!empty($age_msg)): echo $age_msg; endif; ?>
             
-            
+            <!-- Are these required? -->
             
             <label for="phys-name">Physicians Name: </label>
-            <input type="text" name="phys-name" value="<?php if(!empty($_POST['phys-name'])): echo $_POST['phys-name']; endif; ?>" />
+            <input type="text" id="phys-name" name="phys-name" value="<?php if(!empty($_POST['phys-name'])): echo $_POST['phys-name']; endif; ?>" />
             	<br />
                 <?php if(!empty($phys_name_msg)): echo $phys_name_msg; endif; ?>
                 
             <label for="phone">Phone: </label>
-            <input type="text" name="phone" value="<?php if(!empty($_POST['phone'])): echo $_POST['phone']; endif; ?>" /> <p> xxx-xxx-xxxx</p>
+            <input type="text" id="phone" name="phone" value="<?php if(!empty($_POST['phone'])): echo $_POST['phone']; endif; ?>" /> <p> xxx-xxx-xxxx</p>
             	<br />
                 <?php if(!empty($phone_msg)): echo $phone_msg; endif; ?>
                 
@@ -138,16 +156,14 @@ endif;
         <p>1 Has your doctor ever said that you have a heart condition and that you should
         only perform physical activity recommended by a doctor?</p>
         	<br />
-        	<input type="radio" name="1" value="yes"
-				<?php if (isset($_POST['1']) && $_POST['1'] == "Yes") echo 'checked="checked"';?> /> Yes
-            <input type="radio" name="1" value="no"
-            	<?php if (isset($_POST['1']) && $_POST['1'] == "No") echo 'checked="checked"';?> /> No
+        	<input type="radio" name="1" value="yes" <?php if (isset($_POST['1']) && $_POST['1'] == "Yes") echo 'checked="checked"';?> /> Yes
+            <input type="radio" name="1" value="no" <?php if (isset($_POST['1']) && $_POST['1'] == "No") echo 'checked="checked"';?> /> No
             	<br />
                 	<br />
         <p>2 Do you feel pain in your chest when you perform physical activity?</p>
         	<br />
-        	<input type="radio" name="2" value="yes" /> Yes
-            <input type="radio" name="2" value="no" /> No
+        	<input type="radio" name="2" value="yes" <?php if (isset($_POST['2']) && $_POST['2'] == "Yes") echo 'checked="checked"';?> /> Yes
+            <input type="radio" name="2" value="no" <?php if (isset($_POST['2']) && $_POST['2'] == "No") echo 'checked="checked"';?> /> No
             	<br />
                 	<br />
         <p>3 In the past month, have you had chest pain when you were not performing any
@@ -247,7 +263,7 @@ endif;
             	<br />
                 	<br />
         <p>(If yes, please explain.)</p>
-        	<input type="text" name="yes-explain" size="75" />
+        	<input type="text" name="yes-explain" size="75" value="<?php if(!empty($_POST['explain_2'])): echo $_POST['explain_2']; endif; ?>" />
         		<br />
                 	<br />
          <p id="q-type">Medical Questions</p>
@@ -257,7 +273,7 @@ endif;
             <input type="radio" name="14" value="no" /> No
             	<br />
         <p>(If yes, please explain.)</p>
-        	<input type="text" name="yes-explain" size="75" />
+        	<input type="text" name="yes-explain" size="75" value="<?php if(!empty($_POST['explain_2'])): echo $_POST['explain_2']; endif; ?>" />
         		<br />
                 	<br />
         <p>9. Have you ever had any surgeries?</p>
@@ -267,7 +283,7 @@ endif;
             	<br />
                 	<br />
         <p>(If yes, please explain.)</p>
-        	<input type="text" name="yes-explain" size="75" />
+        	<input type="text" name="yes-explain" size="75" value="<?php if(!empty($_POST['explain_2'])): echo $_POST['explain_2']; endif; ?>" />
         		<br />
                 	<br />
         <p>10. Has a medical doctor ever diagnosed you with a chronic disease, such as
@@ -279,7 +295,7 @@ endif;
             	<br />
                 	<br />
         <p>(If yes, please explain.)</p>
-        	<input type="text" name="yes-explain" size="75" />
+        	<input type="text" name="yes-explain" size="75" value="<?php if(!empty($_POST['explain_2'])): echo $_POST['explain_2']; endif; ?>" />
         		<br />
                 	<br />
         <p>11. Are you currently taking any medication?</p>
@@ -288,7 +304,7 @@ endif;
             	<br />
                 	<br />
         <p>(If yes, please explain.)</p>
-        	<input type="text" name="yes-explain" size="75" />
+        	<input type="text" name="yes-explain" size="75" value="<?php if(!empty($_POST['explain_2'])): echo $_POST['explain_2']; endif; ?>" />
         		<br />
                 	<br />
         <input type="submit" name="submit" value="Submit Form" />
